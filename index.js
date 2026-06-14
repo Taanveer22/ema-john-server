@@ -11,12 +11,13 @@ const port = process.env.PORT || 5000;
 app.use(
   cors({
     origin: ['https://ema-john-store-26.netlify.app', 'http://localhost:5173'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,
-    optionsSuccessStatus: true,
+    optionsSuccessStatus: 200,
   })
 );
 app.use(express.json());
+app.options('*', cors());
 
 // database
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.89rnkti.mongodb.net/?appName=Cluster0`;
@@ -32,7 +33,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    // await client.connect();
+    await client.connect();
     console.log(`Connect the client to the server`);
 
     const productCollection = client.db('emaJohnDB').collection('products');

@@ -8,7 +8,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // middleware
-app.use(cors());
+app.use(
+  cors({
+    origin: ['https://ema-john-store-26.netlify.app', 'http://localhost:5000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    optionsSuccessStatus: true,
+  })
+);
 app.use(express.json());
 
 // database
